@@ -1,7 +1,7 @@
-import {catchAsyncError} from './middlewares/catchAsyncError.js'
+import {catchAsyncError} from '../middlewares/catchAsyncError.js'
 import ErrorHandler from '../middlewares/error.js';
-import {User, user} from '../models/userSchema.js'
-export const register = catchAsyncErrors(async (req, res, next) => {
+import {User} from '../models/userSchema.js'
+export const register = catchAsyncError(async (req, res, next) => {
     const { name, email, phone, password, role } = req.body;
     if (!name || !email || !phone || !password || !role) {
       return next(new ErrorHandler("Please fill full form!"));

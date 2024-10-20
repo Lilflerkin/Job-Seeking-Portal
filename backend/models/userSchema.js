@@ -1,10 +1,10 @@
-import moongoose from "moongoose";
+import mongoose from "mongoose"; 
 import validator from "validator";
 
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const userSchema=new moongoose.Schema({
+const userSchema=new mongoose.Schema({
     name:{
         type: String,
         required: [true, "Please provide your name"],
@@ -31,7 +31,7 @@ const userSchema=new moongoose.Schema({
     role:{
         type: String,
         required: [true,"Please provide your role"],
-        enum: ["Job Seeker", "Employeer"],
+        enum: ["Job Seeker", "Employer"],
 
     },
     createdAt:{
@@ -65,4 +65,4 @@ userSchema.methods.getJWTToken=function(){
     })
 }
 
-export const User=moongoose.model("User",userSchema)
+export const User=mongoose.model("User",userSchema)
