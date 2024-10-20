@@ -3,13 +3,18 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import userRouter from "../backend/routes/userRouter.js"
+import applicationRouter from "../backend/routes/applicationRouter.js"
+import jobRouter from "../backend/routes/jobRouter.js"
+import {dbConnection} from './database/dbConnection.js'
+import { errorMiddleware } from "./middlewares/error.js";
 
 const app= express();
 dotenv.config({path: "./config/config.env"})
 
 app.use(cors({
     origin:[process.env.FRONTEND_URL],
-    mathods:['GET','POST','DELETE','PUT'],
+    methods:['GET','POST','DELETE','PUT'],
     credentials: true,
 }))
 
@@ -22,5 +27,14 @@ app.use(fileUpload(
         tempFileDir: "/tmp",
     }
 ));
+
+app.use('/api/v1/user',userRouter)
+app.use('/api/v1/application',applicationRouter)
+app.use('/api/v1/job',jobRouter)
+
+
+dbConnection();
+
+app.use(errorMiddleware)
 export default app;
 
