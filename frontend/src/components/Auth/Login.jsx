@@ -1,28 +1,25 @@
 import React, { useContext, useState } from "react";
-import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
-import { FaPencilAlt } from "react-icons/fa";
-import { FaPhoneFlip } from "react-icons/fa6";
 import { Link, Navigate } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Context } from "../../main";
 
 const Login = () => {
   const [email, setEmail] = useState("");
- 
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  const { isAuthorized, setIsAuthorized } = useContext(Context);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/user/login",
-        { email, role, password },
+        { email, password, role },
         {
           headers: {
             "Content-Type": "application/json",
@@ -31,21 +28,21 @@ const Login = () => {
         }
       );
       toast.success(data.message);
-  
       setEmail("");
       setPassword("");
-  
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage =
+        (error.response && error.response.data && error.response.data.message) ||
+        "Something went wrong. Please try again.";
+      toast.error(errorMessage); // Show error message
     }
   };
 
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
+  if (isAuthorized) {
+    return <Navigate to="/" />;
   }
-
 
   return (
     <>
@@ -53,7 +50,7 @@ const Login = () => {
         <div className="container">
           <div className="header">
             <img src="/JobZeelogo.png" alt="logo" />
-            <h3>Login to your Account</h3>
+            <h3>Login to your account</h3>
           </div>
           <form>
             <div className="inputTag">
@@ -67,21 +64,18 @@ const Login = () => {
                 <FaRegUser />
               </div>
             </div>
-            
-              
             <div className="inputTag">
               <label>Email Address</label>
               <div>
                 <input
                   type="email"
-                  placeholder="tripti@gmail.com"
+                  placeholder="zk@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <MdOutlineMailOutline />
               </div>
             </div>
-           
             <div className="inputTag">
               <label>Password</label>
               <div>
