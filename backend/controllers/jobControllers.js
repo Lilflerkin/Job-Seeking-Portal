@@ -121,3 +121,19 @@ res.status(200).json({
     message:"Job deleted successfully"
 });
 });
+
+export const getSinglejob=catchAsyncError(async(req,res,next)=>{
+    const {id}=req.params;
+    try{
+        const job=await Job.findById(id);
+        if(!job){
+            return next(new ErrorHandler("Job not found"))
+        }
+        res.status(200).json({
+            success:true,
+            job
+        })
+    }catch(error){
+        return next(new ErrorHandler("Invalid ID/Cast Error",400))
+    }
+})

@@ -5,19 +5,19 @@ const HeroSection = () => {
   const details = [
     {
       id: 1,
-      title: "1,23,441",
+      title: "500",
       subTitle: "Live Job",
       icon: <FaSuitcase />,
     },
     {
       id: 2,
-      title: "91220",
+      title: "400",
       subTitle: "Companies",
       icon: <FaBuilding />,
     },
     {
       id: 3,
-      title: "2,34,200",
+      title: "9000",
       subTitle: "Job Seekers",
       icon: <FaUsers />,
     },
